@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{{.Title}}</title>
+      <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+
+      <!-- HTMX -->
+      <!-- <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script> -->
+
+      <!-- Specter CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+      <!-- <link rel="stylesheet" href="/static/css/styles.css"> -->
+
+      <!-- Pixi JS -->
+      <script src="https://pixijs.download/release/pixi.min.js"></script>
+  </head>
+  <body id="main-content">
+    <header class="navbar">
+      <section class="navbar-section">
+        <a
+          hx-get="/"
+          hx-target="#main-content"
+          hx-swap="outerHTML"
+          hx-push-url="/"
+          class="btn btn-link"
+        >Home</a>
+
+        <a
+          hx-get="/station"
+          hx-target="#main-content"
+          hx-swap="outerHTML"
+          hx-push-url="/station"
+          class="btn btn-link"
+        >Station</a>
+      </section>
+      <section class="navbar-center">
+        <!-- centered logo or brand -->
+      </section>
+      <section class="navbar-section">
+        <a href="#" class="btn btn-link">News</a>
+        {{ if .IsLoggedIn }}
+          <a
+            hx-get="/logout"
+            class="btn btn-link"
+          >Log out</a>
+        {{ else }}
+          <a
+            hx-get="/login"
+            hx-target="#main-content"
+            hx-swap="outerHTML"
+            hx-push-url="/login"
+            class="btn btn-link"
+          >Log in</a>
+        {{ end }}
+      </section>
+    </header>
+    <main>
+      <div class="container">
+        {{block "content" .}} {{end}}
+      </div>
+    </main>
+  </body>
+</html>
