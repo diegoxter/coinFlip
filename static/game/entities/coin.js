@@ -2,20 +2,40 @@
 const baseURL = '/static/game/assets/coin'
 
 export async function getCoin(x, y) {
-  await PIXI.Assets.load(`${baseURL}/Blank.png`)
-  await PIXI.Assets.load(`${baseURL}/Star.png`)
+  const blank = await PIXI.Assets.load(`${baseURL}/Blank.png`)
+  const star = await PIXI.Assets.load(`${baseURL}/Star.png`)
+
+  const coin = PIXI.Sprite.from(blank);
+  let isBlank = true
 
   const wrapper = new PIXI.Container();
-  const coin = PIXI.Sprite.from(`${baseURL}/Blank.png`);
   // let starSprite = PIXI.Sprite.from(`${baseURL}/Star.png`);
   wrapper.position = {x: x, y: y};
   wrapper.setSize(10);
-
   wrapper.addChild(coin);
 
   coin.setSize(64);
   coin.anchor.set(0.5);
   coin.rotation = 0;
+  wrapper.eventMode = 'static';
+  wrapper.on('pointerdown', onCoinClick);
+  wrapper.on('pointerenter', onCoinEnter);
+  wrapper.on('pointerleave', onCoinLeave);
+
+  function onCoinClick(e) {
+    isBlank = !isBlank;
+
+    coin.texture = isBlank ? star : blank;
+    e.stopPropagation();
+  }
+
+  function onCoinEnter() {
+    wrapper.scale.set(1.1)
+  }
+
+  function onCoinLeave() {
+    wrapper.scale.set(1)
+  }
 
   // Variables para controlar el giro
   let spinning = false;
