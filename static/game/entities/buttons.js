@@ -7,7 +7,7 @@ PIXI.Assets.add({
 
 const spritesheet = await PIXI.Assets.load('atlas')
 
-export async function getButtonSpriteByName(buttonName, x, y, scale, sizeX, sizeY = null, onClick = null) {
+export default async function getButtonContainerByName(buttonName, x, y, scale, sizeX, sizeY = null, onClick = null) {
   const buttonSprite = new PIXI.Sprite(spritesheet.textures[`${buttonName}Up`]);
 
   const wrapper = new PIXI.Container();

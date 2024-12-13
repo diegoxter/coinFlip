@@ -1,4 +1,4 @@
-import { getCoin, getButtonSpriteByName, getBettingTable } from "./entities/index.js"
+import { getCoinContainer, getButtonContainerByName, getBettingTableContainer } from "./entities/index.js"
 
 const app = new PIXI.Application();
 globalThis.__PIXI_APP__ = app;
@@ -10,76 +10,76 @@ await app.init({ width: screenWidth, height: screenHeight, backgroundColor: 0xbd
 const appContainer = document.getElementById("app-container")
 appContainer.appendChild(app.canvas);
 
-const coin = await getCoin(app.screen.width / 2, app.screen.height - (app.screen.height / 3.14))
+const coinContainer = await getCoinContainer(app.screen.width / 2, app.screen.height - (app.screen.height / 3.14))
 
 const minusButtonXFactor = isMobile.phone? 6.32  : 3.16
 const plusButtonXFactor = isMobile.phone? 1.20 : 1.48
 
-const rollButton = await getButtonSpriteByName('largeGreen', app.screen.width / 2, app.screen.height - (app.screen.height / 7.20), 1.3, 64, 32, onRollClick)
+const rollButtonContainer = await getButtonContainerByName('largeGreen', app.screen.width / 2, app.screen.height - (app.screen.height / 7.20), 1.3, 64, 32, onRollClick)
 
-const minusButton = await getButtonSpriteByName('minus', app.screen.width / minusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onMinusClick)
+const minusButtonContainer = await getButtonContainerByName('minus', app.screen.width / minusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onMinusClick)
 
-const plusButton = await getButtonSpriteByName('plus', app.screen.width / plusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onPlusClick)
+const plusButtonContainer = await getButtonContainerByName('plus', app.screen.width / plusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onPlusClick)
 
 let currentValue = 0
 // TO DO set this with the token amount
 const maxValue = 10
 
-const bettingTextContainer = await getBettingTable(app.screen.width / 2)
+const bettingTextContainer = await getBettingTableContainer(app.screen.width / 2)
 
 app.stage.addChild(bettingTextContainer)
-app.stage.addChild(coin)
-app.stage.addChild(rollButton)
-app.stage.addChild(minusButton)
-app.stage.addChild(plusButton)
+app.stage.addChild(coinContainer)
+app.stage.addChild(rollButtonContainer)
+app.stage.addChild(minusButtonContainer)
+app.stage.addChild(plusButtonContainer)
 
 const GREYEDBUTTONHEX = 0x787676
 const NORMALBUTTONHEX = 0xFFFFFF
 
-const minusButtonChild1 = minusButton.children[0]  // the actual button sprite
-const rollButtonChild1 = rollButton.children[0]    // the actual button sprite
-const plusButtonChild1 = plusButton.children[0]    // the actual button sprite
+const minusButton = minusButtonContainer.children[0]
+const rollButton = rollButtonContainer.children[0]
+const plusButton = plusButtonContainer.children[0]
 
-const minusButtonChild2 = minusButton.children[1]  // the button's text
-const rollButtonChild2 = rollButton.children[1]    // the button's text
-const plusButtonChild2 = plusButton.children[1]    // the button's text
+const minusButtonText = minusButtonContainer.children[1]
+const rollButtonText = rollButtonContainer.children[1]
+const plusButtonText = plusButtonContainer.children[1]
 const bettingText = bettingTextContainer.children[0]
 
-minusButtonChild1.tint = GREYEDBUTTONHEX
-rollButtonChild1.tint = GREYEDBUTTONHEX
+minusButton.tint = GREYEDBUTTONHEX
+rollButton.tint = GREYEDBUTTONHEX
 
-rollButtonChild1.eventMode = 'none';
-minusButtonChild1.eventMode = 'none';
+rollButton.eventMode = 'none';
+minusButton.eventMode = 'none';
 
 const updateButtonStatus = () => {
   if (currentValue === 0) {
-    minusButtonChild1.tint = GREYEDBUTTONHEX;
-    rollButtonChild1.tint = GREYEDBUTTONHEX;
-    minusButtonChild2.style.fill = GREYEDBUTTONHEX
-    rollButtonChild2.style.fill = GREYEDBUTTONHEX
+    minusButton.tint = GREYEDBUTTONHEX;
+    rollButton.tint = GREYEDBUTTONHEX;
+    minusButtonText.style.fill = GREYEDBUTTONHEX
+    rollButtonText.style.fill = GREYEDBUTTONHEX
 
-    minusButtonChild1.eventMode = 'none';
-    rollButtonChild1.eventMode = 'none';
+    minusButton.eventMode = 'none';
+    rollButton.eventMode = 'none';
     bettingText.text = "Not betting anything!"
   } else {
-    minusButtonChild1.tint = NORMALBUTTONHEX;
-    rollButtonChild1.tint = NORMALBUTTONHEX;
-    minusButtonChild2.style.fill = NORMALBUTTONHEX
-    rollButtonChild2.style.fill = NORMALBUTTONHEX
+    minusButton.tint = NORMALBUTTONHEX;
+    rollButton.tint = NORMALBUTTONHEX;
+    minusButtonText.style.fill = NORMALBUTTONHEX
+    rollButtonText.style.fill = NORMALBUTTONHEX
 
-    minusButtonChild1.eventMode = 'static';
-    rollButtonChild1.eventMode = 'static';
+    minusButton.eventMode = 'static';
+    rollButton.eventMode = 'static';
     bettingText.text = `Now betting: ${currentValue}`
   }
 
   if (currentValue === maxValue) {
-    plusButtonChild1.tint = GREYEDBUTTONHEX
-    plusButtonChild2.style.fill = GREYEDBUTTONHEX
-    plusButtonChild1.eventMode = 'none';
+    plusButton.tint = GREYEDBUTTONHEX
+    plusButtonText.style.fill = GREYEDBUTTONHEX
+    plusButton.eventMode = 'none';
   } else {
-    plusButtonChild1.tint = NORMALBUTTONHEX
-    plusButtonChild2.style.fill = NORMALBUTTONHEX
-    plusButtonChild1.eventMode = 'static';
+    plusButton.tint = NORMALBUTTONHEX
+    plusButtonText.style.fill = NORMALBUTTONHEX
+    plusButton.eventMode = 'static';
   }
 }
 

@@ -1,7 +1,7 @@
 
 const baseURL = '/static/game/assets/coin'
 
-export async function getCoin(x, y) {
+export default async function getCoinContainer(x, y) {
   const blank = await PIXI.Assets.load(`${baseURL}/Blank.png`)
   const star = await PIXI.Assets.load(`${baseURL}/Star.png`)
 

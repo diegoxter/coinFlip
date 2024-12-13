@@ -1,4 +1,4 @@
-export default async function getBettingTable(x) {
+export default async function getBettingTableContainer(x) {
   const wrapper = new PIXI.Container();
 
   const text = new PIXI.Text({
