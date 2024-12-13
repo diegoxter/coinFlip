@@ -61,6 +61,7 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 
 	// Método para actualizar la moneda (se llama en cada frame)
 	wrapper.update = () => {
+    // TO DO make the coin rotate
 		if (wrapper.spinning) {
       if (goingUp) {
         wrapper.y = wrapper.y - 2.9
