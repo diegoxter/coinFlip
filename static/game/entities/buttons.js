@@ -7,7 +7,7 @@ PIXI.Assets.add({
 
 const spritesheet = await PIXI.Assets.load('atlas')
 
-export default async function getButtonContainerByName(buttonName, x, y, scale, sizeX, sizeY = null, onClick = null) {
+export async function getButtonContainerByName(buttonName, x, y, scale, sizeX, sizeY = null, onClick = null) {
   const buttonSprite = new PIXI.Sprite(spritesheet.textures[`${buttonName}Up`]);
 
   const wrapper = new PIXI.Container();
@@ -77,6 +77,37 @@ export default async function getButtonContainerByName(buttonName, x, y, scale, 
   buttonSprite.rotation = 0;
 
   wrapper.scale.set(scale)
+
+  return wrapper
+}
+
+export async function getBettingTableContainer(x) {
+  const wrapper = new PIXI.Container();
+  const tableSprite = new PIXI.Sprite(spritesheet.textures.bettingTable);
+  tableSprite.anchor.set(0.5);
+  tableSprite.rotation = 0;
+  tableSprite.setSize(256, 42);
+
+  wrapper.addChild(tableSprite);
+  wrapper.width = 256;
+  wrapper.height = 32;
+
+  const text = new PIXI.Text({
+    text: "Not betting anything!",
+    anchor: 0.5,
+    style: {
+      fontFamily: 'Arial',
+      fontSize: 18,
+      fill: 0xffffff,
+      align: 'center',
+    }
+  });
+  // text.x = x
+  // text.y = 30
+  wrapper.addChild(text);
+
+  wrapper.position = {x: x, y: 30};
+  wrapper.scale.set(1)
 
   return wrapper
 }

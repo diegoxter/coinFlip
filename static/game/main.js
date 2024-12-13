@@ -43,7 +43,7 @@ const plusButton = plusButtonContainer.children[0]
 const minusButtonText = minusButtonContainer.children[1]
 const rollButtonText = rollButtonContainer.children[1]
 const plusButtonText = plusButtonContainer.children[1]
-const bettingText = bettingTextContainer.children[0]
+const bettingText = bettingTextContainer.children[1]
 
 minusButton.tint = GREYEDBUTTONHEX
 rollButton.tint = GREYEDBUTTONHEX
