@@ -1,7 +1,7 @@
 import {
 	getButtonContainerByName,
 	getBettingTableContainer,
-} from "./buttons.js";
-import getCoinContainer from "./coin.js";
+} from "./ui/buttons.js";
+import getCoinContainer from "./ui/coin.js";
 
 export { getCoinContainer, getButtonContainerByName, getBettingTableContainer };
