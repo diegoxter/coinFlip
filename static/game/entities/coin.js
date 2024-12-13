@@ -1,6 +1,6 @@
 const baseURL = "/static/game/assets/coin";
 
-export default async function getCoinContainer(x, y) {
+export default async function getCoinContainer(x, y, coinStopCallback) {
 	const blank = await PIXI.Assets.load(`${baseURL}/Blank.png`);
 	const star = await PIXI.Assets.load(`${baseURL}/Star.png`);
 
@@ -36,28 +36,50 @@ export default async function getCoinContainer(x, y) {
 	}
 
 	// Variables para controlar el giro
-	let spinning = false;
+	wrapper.spinning = false;
+  let goingUp = false
+  let goingDown = false
+
 	const rotationSpeed = 0.1; // Velocidad de rotación
 
 	// Método para iniciar el giro
-	coin.startSpin = () => {
-		spinning = true;
+	wrapper.startSpin = () => {
+		wrapper.spinning = true;
+    goingUp = true;
 	};
 
 	// Método para detener el giro
-	coin.stopSpin = () => {
-		spinning = false;
+	wrapper.stopSpin = () => {
+		wrapper.spinning = false;
+    goingDown = false
+    coinStopCallback("TODO")
 	};
 
 	// Método para actualizar la moneda (se llama en cada frame)
-	coin.update = () => {
-		if (spinning) {
-			// Aumentar la rotación
-			coin.rotation += rotationSpeed;
+	wrapper.update = () => {
+		if (wrapper.spinning) {
+      if (goingUp) {
+        wrapper.y = wrapper.y - 2.9
 
-			// Simular el efecto de escala (opcional)
-			coin.scale.x = Math.sin(coin.rotation) * 0.5 + 1;
-			coin.scale.y = Math.cos(coin.rotation) * 0.5 + 1;
+        if (wrapper.y < 84 && !goingDown) {
+          goingUp = false
+          goingDown = true
+        }
+      }
+
+      if (goingDown) {
+        if (wrapper.y > y) {
+          wrapper.stopSpin()
+        } else {
+          wrapper.y = wrapper.y + 3.1
+        }
+      }
+			// Aumentar la rotación
+			//wrapper.rotation += rotationSpeed;
+
+      // Simular el efecto de escala (opcional)
+			//wrapper.scale.x = Math.sin(wrapper.rotation) * 0.5 + 1;
+			//wrapper.scale.y = Math.cos(wrapper.rotation) * 0.5 + 1;
 		}
 	};
 

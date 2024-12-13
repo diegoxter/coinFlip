@@ -25,6 +25,7 @@ appContainer.appendChild(app.canvas);
 const coinContainer = await getCoinContainer(
 	app.screen.width / 2,
 	app.screen.height - app.screen.height / 3.14,
+  coinStopCallback
 );
 
 const minusButtonXFactor = isMobile.phone ? 6.32 : 3.16;
@@ -80,72 +81,87 @@ app.stage.addChild(plusButtonContainer);
 const GREYEDBUTTONHEX = 0x787676;
 const NORMALBUTTONHEX = 0xffffff;
 
-const minusButton = minusButtonContainer.children[0];
-const rollButton = rollButtonContainer.children[0];
-const plusButton = plusButtonContainer.children[0];
-
-const minusButtonText = minusButtonContainer.children[1];
-const rollButtonText = rollButtonContainer.children[1];
-const plusButtonText = plusButtonContainer.children[1];
 const bettingText = bettingTextContainer.children[1];
 
-minusButton.tint = GREYEDBUTTONHEX;
-rollButton.tint = GREYEDBUTTONHEX;
+const disableButtons = (buttonContainerList) => {
+  for (const buttonContainer of buttonContainerList) {
+    buttonContainer.children[0].tint = GREYEDBUTTONHEX;
+    buttonContainer.eventMode = "none";
+    buttonContainer.children[1].style.fill = GREYEDBUTTONHEX;
+  }
+}
 
-rollButton.eventMode = "none";
-minusButton.eventMode = "none";
+disableButtons([minusButtonContainer, rollButtonContainer])
+
+function enableButtons(buttonContainerList) {
+  for (const buttonContainer of buttonContainerList) {
+    buttonContainer.children[0].tint = NORMALBUTTONHEX;
+    buttonContainer.eventMode = "static";
+    buttonContainer.children[1].style.fill = NORMALBUTTONHEX;
+  }
+}
 
 const updateButtonStatus = () => {
-	if (currentValue === 0) {
-		minusButton.tint = GREYEDBUTTONHEX;
-		rollButton.tint = GREYEDBUTTONHEX;
-		minusButtonText.style.fill = GREYEDBUTTONHEX;
-		rollButtonText.style.fill = GREYEDBUTTONHEX;
+  if (coinContainer.spinning) {
+    bettingText.text = "Spinning...";
 
-		minusButton.eventMode = "none";
-		rollButton.eventMode = "none";
-		bettingText.text = "Not betting anything!";
-	} else {
-		minusButton.tint = NORMALBUTTONHEX;
-		rollButton.tint = NORMALBUTTONHEX;
-		minusButtonText.style.fill = NORMALBUTTONHEX;
-		rollButtonText.style.fill = NORMALBUTTONHEX;
+    disableButtons([minusButtonContainer, rollButtonContainer, plusButtonContainer])
+  } else {
+    if (currentValue === 0) {
+      disableButtons([minusButtonContainer, rollButtonContainer])
 
-		minusButton.eventMode = "static";
-		rollButton.eventMode = "static";
-		bettingText.text = `Now betting: ${currentValue}`;
-	}
+      bettingText.text = "Not betting anything!";
+    } else {
+      enableButtons([minusButtonContainer, rollButtonContainer])
 
-	if (currentValue === maxValue) {
-		plusButton.tint = GREYEDBUTTONHEX;
-		plusButtonText.style.fill = GREYEDBUTTONHEX;
-		plusButton.eventMode = "none";
-	} else {
-		plusButton.tint = NORMALBUTTONHEX;
-		plusButtonText.style.fill = NORMALBUTTONHEX;
-		plusButton.eventMode = "static";
-	}
+      bettingText.text = `Now betting: ${currentValue}`;
+    }
+
+    if (currentValue === maxValue) {
+      disableButtons([plusButtonContainer])
+    } else {
+      enableButtons([plusButtonContainer])
+    }
+  }
 };
 
 function onPlusClick() {
-	currentValue += 1;
-	bettingText.text = `Now betting: ${currentValue}`;
-	updateButtonStatus();
+  if (!coinContainer.spinning && currentValue < maxValue) {
+    currentValue += 1;
+    bettingText.text = `Now betting: ${currentValue}`;
+    updateButtonStatus();
+  }
 }
 
 function onMinusClick() {
-	currentValue -= 1;
-	updateButtonStatus();
+  if (!coinContainer.spinning && currentValue >= 0) {
+    currentValue -= 1;
+    updateButtonStatus();
+  }
 }
 
 function onRollClick() {
-	currentValue = 0;
-	updateButtonStatus();
+  if (!coinContainer.spinning && currentValue > 0) {
+    currentValue = 0;
+    coinContainer.startSpin();
+
+    updateButtonStatus();
+  }
+}
+
+function coinStopCallback(res) {
+  disableButtons([minusButtonContainer, rollButtonContainer])
+
+  bettingText.text = `You ${res}!`
+
+  setTimeout(() => {
+    bettingText.text = "Not betting anything!";
+    enableButtons([plusButtonContainer])
+  }, 1250);
 }
 
 if (currentValue === maxValue) {
-	const sprite = plusButton.children[0];
-	sprite.tint = GREYEDBUTTONHEX;
+  disableButtons([plusButtonContainer])
 }
 
 // let elapsed = 0.0;
@@ -158,3 +174,8 @@ if (currentValue === maxValue) {
 //   // by 50 to slow the animation down a bit...
 //   coin.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
 // });
+
+app.ticker.add(() =>
+  {
+    coinContainer.update();
+  });
