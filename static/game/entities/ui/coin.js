@@ -21,11 +21,15 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 	wrapper.on("pointerleave", onCoinLeave);
 
 	function onCoinClick(e) {
-		isBlank = !isBlank;
-
-		coin.texture = isBlank ? star : blank;
+		changeTexture()
 		e.stopPropagation();
 	}
+
+  function changeTexture() {
+    isBlank = !isBlank;
+
+		coin.texture = isBlank ? star : blank;
+  }
 
 	function onCoinEnter() {
 		wrapper.scale.set(1.1);
