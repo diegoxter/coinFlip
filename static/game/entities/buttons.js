@@ -24,6 +24,37 @@ export async function getButtonSpriteByName(buttonName, x, y, scale, sizeX, size
     }
   }
 
+  let _text = null
+
+  switch (buttonName) {
+    case 'largeGreen':
+      _text = "Roll!"
+      break;
+
+    case 'minus':
+      _text = "-"
+      break;
+
+    case 'plus':
+      _text = "+"
+      break;
+
+    default:
+      break;
+  }
+
+  const buttonText = new PIXI.Text({
+    text: _text,
+    anchor: 0.5,
+    style: {
+      fontFamily: 'Arial',
+      fontSize: 18,
+      fill: buttonName === 'plus'? 0xffffff : 0x787676,
+      align: 'center',
+    }
+  });
+  wrapper.addChild(buttonText)
+
   function onButtonEnter() {
     wrapper.scale.set(scale+0.05)
   }
@@ -39,10 +70,13 @@ export async function getButtonSpriteByName(buttonName, x, y, scale, sizeX, size
   } else {
     buttonSprite.setSize(sizeX);
   }
-  wrapper.scale.set(scale)
+
+  buttonText.y = -5
 
   buttonSprite.anchor.set(0.5);
   buttonSprite.rotation = 0;
+
+  wrapper.scale.set(scale)
 
   return wrapper
 }

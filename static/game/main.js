@@ -28,35 +28,47 @@ const maxValue = 10
 const GREYEDBUTTONHEX = 0x787676
 const NORMALBUTTONHEX = 0xFFFFFF
 
-const minusButtonChild = minusButton.children[0]
-const rollButtonChild = rollButton.children[0]
-const plusButtonChild = plusButton.children[0]
+const minusButtonChild1 = minusButton.children[0]  // the actual button sprite
+const rollButtonChild1 = rollButton.children[0]    // the actual button sprite
+const plusButtonChild1 = plusButton.children[0]    // the actual button sprite
 
-minusButtonChild.tint = GREYEDBUTTONHEX
-rollButtonChild.tint = GREYEDBUTTONHEX
+const minusButtonChild2 = minusButton.children[1]  // the button's text
+const rollButtonChild2 = rollButton.children[1]    // the button's text
+const plusButtonChild2 = plusButton.children[1]    // the button's text
 
-rollButtonChild.eventMode = 'none';
-minusButtonChild.eventMode = 'none';
+minusButtonChild1.tint = GREYEDBUTTONHEX
+rollButtonChild1.tint = GREYEDBUTTONHEX
+
+rollButtonChild1.eventMode = 'none';
+minusButtonChild1.eventMode = 'none';
 
 const updateButtonStatus = () => {
   if (currentValue === 0) {
-    minusButtonChild.tint = GREYEDBUTTONHEX;
-    rollButtonChild.tint = GREYEDBUTTONHEX;
-    minusButtonChild.eventMode = 'none';
-    rollButtonChild.eventMode = 'none';
+    minusButtonChild1.tint = GREYEDBUTTONHEX;
+    rollButtonChild1.tint = GREYEDBUTTONHEX;
+    minusButtonChild2.style.fill = GREYEDBUTTONHEX
+    rollButtonChild2.style.fill = GREYEDBUTTONHEX
+
+    minusButtonChild1.eventMode = 'none';
+    rollButtonChild1.eventMode = 'none';
   } else {
-    minusButtonChild.tint = NORMALBUTTONHEX;
-    rollButtonChild.tint = NORMALBUTTONHEX;
-    minusButtonChild.eventMode = 'static';
-    rollButtonChild.eventMode = 'static';
+    minusButtonChild1.tint = NORMALBUTTONHEX;
+    rollButtonChild1.tint = NORMALBUTTONHEX;
+    minusButtonChild2.style.fill = NORMALBUTTONHEX
+    rollButtonChild2.style.fill = NORMALBUTTONHEX
+
+    minusButtonChild1.eventMode = 'static';
+    rollButtonChild1.eventMode = 'static';
   }
 
   if (currentValue === maxValue) {
-    plusButtonChild.tint = GREYEDBUTTONHEX
-    plusButtonChild.eventMode = 'none';
+    plusButtonChild1.tint = GREYEDBUTTONHEX
+    plusButtonChild2.style.fill = GREYEDBUTTONHEX
+    plusButtonChild1.eventMode = 'none';
   } else {
-    plusButtonChild.tint = NORMALBUTTONHEX
-    plusButtonChild.eventMode = 'static';
+    plusButtonChild1.tint = NORMALBUTTONHEX
+    plusButtonChild2.style.fill = NORMALBUTTONHEX
+    plusButtonChild1.eventMode = 'static';
   }
 }
 
