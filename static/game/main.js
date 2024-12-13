@@ -6,7 +6,7 @@ globalThis.__PIXI_APP__ = app;
 const screenWidth = isMobile.phone? window.innerWidth - (window.innerWidth / 20) : 640
 const screenHeight = isMobile.phone? window.innerHeight - (window.innerHeight / 5) : 360
 
-await app.init({ width: screenWidth, height: screenHeight, backgroundColor: 0xbdcbe3 });
+await app.init({ width: screenWidth, height: screenHeight, backgroundColor: 0x000000 });
 const appContainer = document.getElementById("app-container")
 appContainer.appendChild(app.canvas);
 
