@@ -1,21 +1,21 @@
 {
   "frames": {
-    "minusUp": {
+    "bluePentUp": {
         "frame": { "x": 0, "y":0, "w":32, "h":32 },
         "sourceSize": { "w": 32, "h": 32 },
         "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
     },
-    "minusPressed": {
+    "bluePentPressed": {
         "frame": { "x": 32, "y":0, "w":32, "h":32 },
         "sourceSize": { "w": 32, "h": 32 },
         "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
     },
-    "plusUp": {
+    "brownPentUp": {
         "frame": { "x": 0, "y":32, "w":32, "h":32 },
         "sourceSize": { "w": 32, "h": 32 },
         "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
     },
-    "plusPressed": {
+    "brownPentPressed": {
         "frame": { "x": 32, "y":32, "w":32, "h":32 },
         "sourceSize": { "w": 32, "h": 32 },
         "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
