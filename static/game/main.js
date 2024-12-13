@@ -1,5 +1,4 @@
-import { getCoin } from "./entities/coin.js";
-import { getButtonSpriteByName } from "./entities/buttons.js";
+import { getCoin, getButtonSpriteByName } from "./entities/index.js"
 
 const app = new PIXI.Application();
 globalThis.__PIXI_APP__ = app;
