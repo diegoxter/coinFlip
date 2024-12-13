@@ -9,7 +9,6 @@ export async function getCoin(x, y) {
   let isBlank = true
 
   const wrapper = new PIXI.Container();
-  // let starSprite = PIXI.Sprite.from(`${baseURL}/Star.png`);
   wrapper.position = {x: x, y: y};
   wrapper.setSize(10);
   wrapper.addChild(coin);
