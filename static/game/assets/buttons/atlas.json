@@ -1,0 +1,43 @@
+{
+  "frames": {
+    "minusUp": {
+        "frame": { "x": 0, "y":0, "w":32, "h":32 },
+        "sourceSize": { "w": 32, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+    },
+    "minusPressed": {
+        "frame": { "x": 32, "y":0, "w":32, "h":32 },
+        "sourceSize": { "w": 32, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+    },
+    "plusUp": {
+        "frame": { "x": 0, "y":32, "w":32, "h":32 },
+        "sourceSize": { "w": 32, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+    },
+    "plusPressed": {
+        "frame": { "x": 32, "y":32, "w":32, "h":32 },
+        "sourceSize": { "w": 32, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+    },
+    "largeGreenUp": {
+        "frame": { "x": 0, "y": 384, "w": 64, "h":32 },
+        "sourceSize": { "w": 64, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 }
+    },
+    "largeGreenPressed": {
+        "frame": { "x": 64, "y": 384, "w": 64, "h": 32 },
+        "sourceSize": { "w": 64, "h": 32 },
+        "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 }
+    }
+  },
+  "meta": {
+      "image": "spritesheet.png",
+      "format": "RGBA8888",
+      "size": { "w": 640, "h": 512 },
+      "scale": 1
+  },
+  "animations": {
+      "enemy": ["button1", "button2"]
+  }
+}
