@@ -4,6 +4,7 @@ import {
 	getBettingTableContainer,
 } from "./entities/index.js";
 
+// TO DO put all of this in a game.js to better organize stuff
 const app = new PIXI.Application();
 globalThis.__PIXI_APP__ = app;
 
