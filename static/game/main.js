@@ -12,9 +12,15 @@ const appContainer = document.getElementById("app-container")
 appContainer.appendChild(app.canvas);
 
 const coin = await getCoin(app.screen.width / 2, app.screen.height - (app.screen.height / 3.14))
+
+const minusButtonXFactor = isMobile.phone? 6.32  : 3.16
+const plusButtonXFactor = isMobile.phone? 1.20 : 1.48
+
 const rollButton = await getButtonSpriteByName('largeGreen', app.screen.width / 2, app.screen.height - (app.screen.height / 7.20), 1.3, 64, 32, onRollClick)
-const minusButton = await getButtonSpriteByName('minus', app.screen.width / 3.16, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onMinusClick)
-const plusButton = await getButtonSpriteByName('plus', app.screen.width / 1.48, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onPlusClick)
+
+const minusButton = await getButtonSpriteByName('minus', app.screen.width / minusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onMinusClick)
+
+const plusButton = await getButtonSpriteByName('plus', app.screen.width / plusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onPlusClick)
 
 app.stage.addChild(coin)
 app.stage.addChild(rollButton)
