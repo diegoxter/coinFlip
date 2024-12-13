@@ -3,9 +3,10 @@ const baseURL = "/static/game/assets/coin";
 export default async function getCoinContainer(x, y, coinStopCallback) {
 	const blank = await PIXI.Assets.load(`${baseURL}/Blank.png`);
 	const star = await PIXI.Assets.load(`${baseURL}/Star.png`);
+	const btc = await PIXI.Assets.load(`${baseURL}/BTC.png`);
 
 	const coin = PIXI.Sprite.from(blank);
-	let isBlank = true;
+	// let isBlank = true;
 
 	const wrapper = new PIXI.Container();
 	wrapper.position = { x: x, y: y };
@@ -16,19 +17,19 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 	coin.anchor.set(0.5);
 	coin.rotation = 0;
 	wrapper.eventMode = "static";
-	wrapper.on("pointerdown", onCoinClick);
+	// wrapper.on("pointerdown", onCoinClick);
 	wrapper.on("pointerenter", onCoinEnter);
 	wrapper.on("pointerleave", onCoinLeave);
 
-	function onCoinClick(e) {
-		changeTexture()
-		e.stopPropagation();
-	}
+	// function onCoinClick(e) {
+	// 	changeTexture()
+	// 	e.stopPropagation();
+	// }
 
-  function changeTexture() {
-    isBlank = !isBlank;
+  function changeTexture(heads) {
+    //isBlank = !isBlank;
 
-		coin.texture = isBlank ? star : blank;
+		coin.texture = heads ? btc : star;
   }
 
 	function onCoinEnter() {
@@ -57,6 +58,7 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 		wrapper.spinning = false;
     goingDown = false
     coinStopCallback("TODO")
+    changeTexture(true)
 	};
 
 	// Método para actualizar la moneda (se llama en cada frame)
