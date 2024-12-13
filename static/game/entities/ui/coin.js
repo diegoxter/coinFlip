@@ -26,10 +26,8 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 	// 	e.stopPropagation();
 	// }
 
-  function changeTexture(heads) {
-    //isBlank = !isBlank;
-
-		coin.texture = heads ? btc : star;
+  function changeTexture(newTexture) {
+		coin.texture = newTexture;
   }
 
 	function onCoinEnter() {
@@ -44,8 +42,11 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 	wrapper.spinning = false;
   let goingUp = false
   let goingDown = false
-
-	const rotationSpeed = 0.1; // Velocidad de rotación
+  let direction = 1;
+  let scaleX = 1;
+  let scaleY = 1;
+	const rotationSpeed = 0.3; // Velocidad de rotación
+  const flipSpeed = 0.22;  // Controla la velocidad de "achatado"
 
 	// Método para iniciar el giro
 	wrapper.startSpin = () => {
@@ -55,16 +56,43 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
 
 	// Método para detener el giro
 	wrapper.stopSpin = () => {
+    wrapper.scale.x = 1;
+    wrapper.scale.y = 1;
+    wrapper.rotation = 0
 		wrapper.spinning = false;
+
     goingDown = false
     coinStopCallback("TODO")
-    changeTexture(true)
+
+    changeTexture(btc)
+
+    setTimeout(() => {
+      changeTexture(blank)
+    }, 1250);
 	};
 
-	// Método para actualizar la moneda (se llama en cada frame)
-	wrapper.update = () => {
-    // TO DO make the coin rotate
+  wrapper.update = () => {
 		if (wrapper.spinning) {
+      if (direction === 1) {
+        scaleX = Math.max(0.2, scaleX - flipSpeed);  // Reducir el tamaño en X (achatando la moneda)
+        scaleY = Math.min(1.5, scaleY + flipSpeed);  // Aumentar el tamaño en Y para darle un efecto de profundidad
+      } else {
+        scaleX = Math.min(1, scaleX + flipSpeed);  // Regresar al tamaño original
+        scaleY = Math.max(1, scaleY - flipSpeed);  // Regresar a la escala original
+      }
+
+      wrapper.scale.x = scaleX;
+      wrapper.scale.y = scaleY;
+
+      wrapper.rotation += rotationSpeed;
+
+      // Control de dirección: cuando se llega al límite, cambiar de dirección
+      if (scaleX <= 0.2 && direction === 1) {
+        direction = -1;  // Hacer que la moneda vuelva a su forma original
+      } else if (scaleX >= 1 && direction === -1) {
+        direction = 1;  // Hacer que la moneda se "aplane" de nuevo
+      }
+
       if (goingUp) {
         wrapper.y = wrapper.y - 2.9
 
@@ -81,12 +109,6 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
           wrapper.y = wrapper.y + 3.1
         }
       }
-			// Aumentar la rotación
-			//wrapper.rotation += rotationSpeed;
-
-      // Simular el efecto de escala (opcional)
-			//wrapper.scale.x = Math.sin(wrapper.rotation) * 0.5 + 1;
-			//wrapper.scale.y = Math.cos(wrapper.rotation) * 0.5 + 1;
 		}
 	};
 
