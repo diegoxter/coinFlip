@@ -115,7 +115,7 @@ const updateButtonStatus = () => {
     } else {
       enableButtons([minusButtonContainer, rollButtonContainer])
 
-      bettingText.text = `Now betting: ${currentValue}`;
+      bettingText.text = `Now betting: ${currentValue} CAS`;
     }
 
     if (currentValue === maxValue) {
@@ -129,7 +129,6 @@ const updateButtonStatus = () => {
 function onPlusClick() {
   if (!coinContainer.spinning && currentValue < maxValue) {
     currentValue += 1;
-    bettingText.text = `Now betting: ${currentValue}`;
     updateButtonStatus();
   }
 }
@@ -156,13 +155,8 @@ function coinStopCallback(res) {
   bettingText.text = `You ${res}!`
 
   setTimeout(() => {
-    bettingText.text = "Not betting anything!";
-    enableButtons([plusButtonContainer])
+    updateButtonStatus();
   }, 1250);
-}
-
-if (currentValue === maxValue) {
-  disableButtons([plusButtonContainer])
 }
 
 // Tell our application's ticker to run a new callback every frame, passing
