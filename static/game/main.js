@@ -22,6 +22,7 @@ app.stage.addChild(minusButton)
 app.stage.addChild(plusButton)
 
 let currentValue = 0
+// TO DO set this with the token amount
 const maxValue = 10
 
 const GREYEDBUTTONHEX = 0x787676
