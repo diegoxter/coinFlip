@@ -7,7 +7,7 @@ PIXI.Assets.add({
 
 const spritesheet = await PIXI.Assets.load('atlas')
 
-export async function getButtonContainerByName(buttonName, btnText, x, y, scale, sizeX, sizeY = null, onClick = null) {
+export async function getButtonContainerByName(buttonName, btnData, x, y, scale, sizeX, sizeY = null, onClick = null) {
   const buttonSprite = new PIXI.Sprite(spritesheet.textures[`${buttonName}Up`]);
 
   const wrapper = new PIXI.Container();
@@ -25,12 +25,12 @@ export async function getButtonContainerByName(buttonName, btnText, x, y, scale,
   }
 
   const buttonText = new PIXI.Text({
-    text: btnText,
+    text: btnData.text,
     anchor: 0.5,
     style: {
       fontFamily: 'Arial',
       fontSize: 18,
-      fill: buttonName === 'plus'? 0xffffff : 0x787676,
+      fill: btnData.color,
       align: 'center',
     }
   });
