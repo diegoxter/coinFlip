@@ -1,4 +1,5 @@
 import { getButtonSpriteByName } from "./buttons.js";
 import { getCoin } from "./coin.js";
+import getBettingTable from "./bettingTable.js";
 
-export { getCoin, getButtonSpriteByName }
+export { getCoin, getButtonSpriteByName, getBettingTable }

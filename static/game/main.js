@@ -1,4 +1,4 @@
-import { getCoin, getButtonSpriteByName } from "./entities/index.js"
+import { getCoin, getButtonSpriteByName, getBettingTable } from "./entities/index.js"
 
 const app = new PIXI.Application();
 globalThis.__PIXI_APP__ = app;
@@ -21,14 +21,17 @@ const minusButton = await getButtonSpriteByName('minus', app.screen.width / minu
 
 const plusButton = await getButtonSpriteByName('plus', app.screen.width / plusButtonXFactor, app.screen.height - (app.screen.height / 7.20), 1.3, 32, null, onPlusClick)
 
+let currentValue = 0
+// TO DO set this with the token amount
+const maxValue = 10
+
+const bettingTextContainer = await getBettingTable(app.screen.width / 2)
+
+app.stage.addChild(bettingTextContainer)
 app.stage.addChild(coin)
 app.stage.addChild(rollButton)
 app.stage.addChild(minusButton)
 app.stage.addChild(plusButton)
-
-let currentValue = 0
-// TO DO set this with the token amount
-const maxValue = 10
 
 const GREYEDBUTTONHEX = 0x787676
 const NORMALBUTTONHEX = 0xFFFFFF
@@ -40,6 +43,7 @@ const plusButtonChild1 = plusButton.children[0]    // the actual button sprite
 const minusButtonChild2 = minusButton.children[1]  // the button's text
 const rollButtonChild2 = rollButton.children[1]    // the button's text
 const plusButtonChild2 = plusButton.children[1]    // the button's text
+const bettingText = bettingTextContainer.children[0]
 
 minusButtonChild1.tint = GREYEDBUTTONHEX
 rollButtonChild1.tint = GREYEDBUTTONHEX
@@ -56,6 +60,7 @@ const updateButtonStatus = () => {
 
     minusButtonChild1.eventMode = 'none';
     rollButtonChild1.eventMode = 'none';
+    bettingText.text = "Not betting anything!"
   } else {
     minusButtonChild1.tint = NORMALBUTTONHEX;
     rollButtonChild1.tint = NORMALBUTTONHEX;
@@ -64,6 +69,7 @@ const updateButtonStatus = () => {
 
     minusButtonChild1.eventMode = 'static';
     rollButtonChild1.eventMode = 'static';
+    bettingText.text = `Now betting: ${currentValue}`
   }
 
   if (currentValue === maxValue) {
@@ -79,6 +85,7 @@ const updateButtonStatus = () => {
 
 function onPlusClick() {
   currentValue += 1
+  bettingText.text = `Now betting: ${currentValue}`
   updateButtonStatus()
 }
 
