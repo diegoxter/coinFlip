@@ -32,37 +32,65 @@
           class="btn btn-link"
         >Home</a>
 
-        <a
+        <!-- <a
           hx-get="/station"
           hx-target="#main-content"
           hx-swap="outerHTML"
           hx-push-url="/station"
           class="btn btn-link"
-        >Station</a>
+        >Station</a> -->
       </section>
       <section class="navbar-center">
         <!-- centered logo or brand -->
       </section>
-      <section class="navbar-section">
-        <a href="#" class="btn btn-link">News</a>
-        {{ if .IsLoggedIn }}
-          <a
-            hx-get="/logout"
-            class="btn btn-link"
-          >Log out</a>
-        {{ else }}
-          <a
-            hx-get="/login"
-            hx-target="#main-content"
-            hx-swap="outerHTML"
-            hx-push-url="/login"
-            class="btn btn-link"
-          >Log in</a>
-        {{ end }}
+
+      <section class="navbar-section p-2">
+        <button class="btn btn-primary" id="open-connect-dialog">Connect</button>
       </section>
     </header>
     <main>
       <div class="container">
+        <div class="modal modal-sm" id="connect-dialog">
+          <a href="#close" class="modal-overlay" aria-label="Close"></a>
+          <div class="modal-container">
+            <div class="modal-header">
+              <a href="#close" class="btn btn-clear float-right" aria-label="Close"
+              id="connect-dialog-close"></a>
+              <div class="modal-title h5">Choose a network to connect</div>
+            </div>
+            <div class="modal-body">
+              <div class="content">
+                <div class="d-inline-flex f-d-col">
+                  <button class="btn no-border network-button">
+                    <img src="/static/img/aergoround.png" alt="aergo logo" class="icon "> Connect to aergo mainnet
+                  </button>
+
+                  <button class="btn no-border network-button">
+                    <img src="/static/img/aergoround.png" alt="aergo logo" class="icon "> Connect to aergo testnet
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="modal-footer">
+              ...
+            </div> -->
+          </div>
+        </div>
+
+        <script>
+          const dialog = document.getElementById("connect-dialog")
+          const showButton = document.getElementById("open-connect-dialog");
+          const closeButton = document.getElementById("connect-dialog-close");
+
+          showButton.addEventListener("click", () => {
+            dialog.classList.add("active");
+          });
+
+          closeButton.addEventListener("click", () => {
+            dialog.classList.remove("active");
+          });
+        </script>
+
         {{block "content" .}} {{end}}
       </div>
     </main>
