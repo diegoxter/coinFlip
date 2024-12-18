@@ -1,6 +1,6 @@
 const baseURL = "/static/game/assets/coin";
 
-export default async function getCoinContainer(x, y, coinStopCallback) {
+export default async function getCoinContainer(x, y, coinStopCallback, upSpeed, downSpeed) {
 	const blank = await PIXI.Assets.load(`${baseURL}/Blank.png`);
 	const star = await PIXI.Assets.load(`${baseURL}/Star.png`);
 	const btc = await PIXI.Assets.load(`${baseURL}/BTC.png`);
@@ -94,9 +94,9 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
       }
 
       if (goingUp) {
-        wrapper.y = wrapper.y - 2.9
+        wrapper.y = wrapper.y - upSpeed
 
-        if (wrapper.y < 84 && !goingDown) {
+        if (wrapper.y < 95 && !goingDown) {
           goingUp = false
           goingDown = true
         }
@@ -106,7 +106,7 @@ export default async function getCoinContainer(x, y, coinStopCallback) {
         if (wrapper.y > y) {
           wrapper.stopSpin()
         } else {
-          wrapper.y = wrapper.y + 3.1
+          wrapper.y = wrapper.y + downSpeed
         }
       }
 		}

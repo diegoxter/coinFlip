@@ -28,3 +28,17 @@ func RootPageHandler(w http.ResponseWriter, r *http.Request) {
 			return
 	}
 }
+
+func GamePageHandler(w http.ResponseWriter, r *http.Request) {
+
+	data := PageData{
+		Title:   "Welcome to Coin Flip!",
+		Heading: "Flip the coin!",
+	}
+
+	err := Tmpl["game.html"].Execute(w, data)
+	if err != nil {
+			http.Error(w, "Error al procesar el template", http.StatusInternalServerError)
+			return
+	}
+}

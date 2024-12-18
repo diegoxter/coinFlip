@@ -12,8 +12,8 @@ const screenWidth = isMobile.phone
 	? window.innerWidth - window.innerWidth / 20
 	: 640;
 const screenHeight = isMobile.phone
-	? window.innerHeight - window.innerHeight / 5
-	: 360;
+	? window.innerHeight - 10
+	: 460;
 
 await app.init({
 	width: screenWidth,
@@ -23,10 +23,18 @@ await app.init({
 const appContainer = document.getElementById("app-container");
 appContainer.appendChild(app.canvas);
 
+const upSpeed = isMobile.phone
+? 4.9 : 2.9
+
+const downSpeed = isMobile.phone
+? 6.1 : 3.1
+
 const coinContainer = await getCoinContainer(
 	app.screen.width / 2,
 	app.screen.height - app.screen.height / 3.14,
-  coinStopCallback
+  coinStopCallback,
+  upSpeed,
+  downSpeed
 );
 
 const minusButtonXFactor = isMobile.phone ? 6.32 : 3.16;
