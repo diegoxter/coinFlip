@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"log"
 	"strings"
 
 	"github.com/go-telegram/bot"
@@ -10,23 +9,22 @@ import (
 )
 
 func DefaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
-
 	if update.CallbackQuery != nil {
     var gameUrl string
-      switch update.CallbackQuery.GameShortName {
+    switch update.CallbackQuery.GameShortName {
 
-      case "flipCASCoin":
-        gameUrl = ""
+    case "flipCASCoin":
+      gameUrl = ""
 
-      case "flipCASCoin_test":
-        gameUrl = "http://192.168.18.17:8080/game"
-      }
+    case "flipCASCoin_test":
+      gameUrl = "http://192.168.18.17:8080/game"
+    }
 
-      b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
-        CallbackQueryID: update.CallbackQuery.ID,
-        Text:            "Launching the game...",
-        URL: gameUrl,
-      })
+    b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
+      CallbackQueryID: update.CallbackQuery.ID,
+      Text:            "Launching the game...",
+      URL: gameUrl,
+    })
 	}
 
   if update.InlineQuery != nil {
@@ -34,6 +32,12 @@ func DefaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
       &models.InlineQueryResultGame{
         ID: "1",
         GameShortName: "flipCASCoin_test",
+      },
+      &models.InlineQueryResultArticle{
+        ID: "2",
+        Title: "Set up",
+        InputMessageContent: &models.InputTextMessageContent{MessageText: "Set up your account"},
+        ReplyMarkup: buildKeyboard(),
       },
     }
 
@@ -44,17 +48,20 @@ func DefaultHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
   }
 }
 
-func CallbackHandler(ctx context.Context, b *bot.Bot, update *models.Update)  {
-  // answering callback query first to let Telegram know that we received the callback query,
-	// and we're handling it. Otherwise, Telegram might retry sending the update repetitively
-	// as it thinks the callback query doesn't reach to our application. learn more by
-	// reading the footnote of the https://core.telegram.org/bots/api#callbackquery type.
-	b.AnswerCallbackQuery(ctx, &bot.AnswerCallbackQueryParams{
-		CallbackQueryID: update.CallbackQuery.ID,
-		ShowAlert:       false,
-	})
+func buildKeyboard() models.ReplyMarkup {
+	kb := &models.InlineKeyboardMarkup{
+		InlineKeyboard: [][]models.InlineKeyboardButton{
+			{
+				{Text: "Option 1", CallbackData: "btn_opt1"},
+				{Text: "Option 2", CallbackData: "btn_opt2"},
+				{Text: "Option 3", CallbackData: "btn_opt3"},
+			}, {
+				{Text: "Select", CallbackData: "btn_select"},
+			},
+		},
+	}
 
-  log.Printf("%v",update.CallbackQuery.Data)
+	return kb
 }
 
 func SetupHandler(ctx context.Context, b *bot.Bot, update *models.Update) {
